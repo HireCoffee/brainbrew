@@ -3,9 +3,6 @@ name = "brainbrew"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "Lrakotoson", email = "rakotosonloicandoniaina@gmail.com" }
-]
 requires-python = ">=3.13"
 dependencies = [
     "pypdf==6.10.0",

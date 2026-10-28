@@ -1,0 +1,79 @@
+name: Publier les cours disponibles
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # GitHub Actions peut retarder ce déclenchement. Relance manuelle disponible.
+    - cron: '3,8,13,18,23,28,33,38,43,48,53,58 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.stage.outputs.changed }}
+    env:
+      HAS_CONTENT_TOKEN: ${{ secrets.BRAINBREW_CONTENTS_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Lire les sources privées
+        if: env.HAS_CONTENT_TOKEN == 'true'
+        uses: actions/checkout@v7
+        with:
+          repository: HireCoffee/brainbrew-internal
+          ref: main
+          token: ${{ secrets.BRAINBREW_CONTENTS_TOKEN }}
+          path: private-content
+          persist-credentials: false
+          sparse-checkout: student
+          sparse-checkout-cone-mode: true
+      - name: Préparer uniquement les ressources disponibles
+        id: stage
+        run: python tools/brainbrew.py --compare-published --github-output "$GITHUB_OUTPUT"
+      - uses: quarto-dev/quarto-actions/setup@v2
+        if: steps.stage.outputs.changed == 'true'
+        with:
+          version: '1.10.19'
+          tinytex: true
+      - name: Vérifier le moteur
+        if: steps.stage.outputs.changed == 'true'
+        run: python -m unittest discover -s tests -v
+      - name: Générer le site et ses PDF
+        if: steps.stage.outputs.changed == 'true'
+        run: python tools/brainbrew.py --render-staged
+      - uses: actions/configure-pages@v6
+        if: steps.stage.outputs.changed == 'true'
+      - uses: actions/upload-pages-artifact@v5
+        if: steps.stage.outputs.changed == 'true'
+        with:
+          path: build/site/_site
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

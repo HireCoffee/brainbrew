@@ -1,0 +1,22 @@
+courses:
+  - id: introduction-au-mlops
+    title: Introduction au MLOps
+    description: Évaluer, exposer, optimiser et déployer des modèles IA.
+    timezone: Europe/Paris
+    sessions:
+      - id: session-01
+        title: Évaluer et choisir un modèle
+        starts_at: null
+        ready: false
+      - id: session-02
+        title: Construire une API avec FastAPI
+        starts_at: null
+        ready: false
+      - id: session-03
+        title: Optimiser et mesurer les performances
+        starts_at: null
+        ready: false
+      - id: session-04
+        title: Décider, déployer et monitorer
+        starts_at: null
+        ready: false

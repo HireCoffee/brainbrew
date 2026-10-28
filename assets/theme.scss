@@ -1,0 +1,32 @@
+/*-- scss:defaults --*/
+$primary: #805237;
+$body-color: #262c30;
+$body-bg: #fffdfa;
+$link-color: #805237;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-size-base: 1.05rem;
+$headings-font-weight: 650;
+
+/*-- scss:rules --*/
+.navbar { border-bottom: 1px solid #e8dfd4; }
+.navbar-brand { font-weight: 750; letter-spacing: -.04em; }
+.catalog-intro { max-width: 42rem; margin-bottom: 2rem; color: #5a625f; }
+.course-card, .session-card {
+  background: white;
+  border: 1px solid #e8dfd4;
+  border-radius: 12px;
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.course-card h2, .session-card h2 { margin: .1rem 0 .6rem; border: 0; padding: 0; }
+.session-card h2 { font-size: 1.2rem; }
+.eyebrow { font-size: .78rem; text-transform: uppercase; letter-spacing: .09em; color: #6c756f; }
+.session-date { color: #5a625f; font-size: .92rem; }
+.status { display: inline-block; font-size: .8rem; border-radius: 20px; padding: .15rem .6rem; }
+.status-open { color: #235b49; background: #edf5ed; }
+.status-locked { color: #645e55; background: #f1eee7; }
+.resource-list { padding-left: 1.2rem; }
+.course-progress { margin-bottom: 1.4rem; color: #5a625f; }
+.sidebar-item { margin-bottom: .15rem; }
+pre { border-radius: 6px; }
+@media print { .navbar, .sidebar, .resource-list { display: none; } }

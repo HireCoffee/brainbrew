@@ -1,0 +1,4 @@
+pypdf==6.10.0
+    # via brainbrew
+pyyaml==6.0.3
+    # via brainbrew

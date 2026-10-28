@@ -1,0 +1,26 @@
+# Local agent instructions and code index
+AGENTS.md
+.codegraph/
+
+# Quarto caches and generated output
+.quarto/
+_site/
+_book/
+_freeze/
+*_files/
+*_cache/
+.quarto-preview.log
+*.quarto_ipynb
+*.pdf
+
+# Local build and environment files
+/build/
+/private-content/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.env.*
+!.env.example
+.openai/
